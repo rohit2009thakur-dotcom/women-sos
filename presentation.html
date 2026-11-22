@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhaya - College Project Presentation Deck</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @media print {
+      @page {
+        size: 16in 9in landscape;
+        margin: 0;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      .slide {
+        display: flex !important;
+        page-break-after: always;
+        height: 100vh !important;
+        width: 100vw !important;
+        border: none !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    .slide {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .bg-gradient-slide {
+      background: radial-gradient(circle at 10% 20%, #1e1b18 0%, #11100e 90%);
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-rose-500 selection:text-white">
+
+  <!-- Top Slide Deck Header (No Print) -->
+  <header class="no-print bg-stone-900/80 backdrop-blur border-b border-stone-800 px-6 py-3 flex items-center justify-between z-30">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center font-bold text-white text-sm">
+        अभ
+      </div>
+      <div>
+        <h1 class="text-sm font-bold text-stone-200">Abhaya Project Presentation</h1>
+        <p class="text-[11px] text-stone-400">College Project Deck & Campus Safety Platform</p>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center space-x-2">
+      <span id="slide-indicator" class="text-xs font-mono font-bold text-amber-400 bg-stone-800 px-3 py-1.5 rounded-lg border border-stone-700">
+        Slide 1 / 12
+      </span>
+      <button onclick="toggleSpeakerNotes()" class="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-medium border border-stone-700 transition">
+        📝 Notes
+      </button>
+      <button onclick="window.print()" class="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-medium border border-stone-700 transition">
+        🖨️ Export PDF
+      </button>
+      <button onclick="toggleFullScreen()" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
+        ⛶ Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Slides Viewport -->
+  <main class="flex-1 flex items-center justify-center p-4 sm:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- SLIDE 1: Title Slide -->
+    <section class="slide active w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Welcome examiners and peers. Today I am presenting Abhaya, a zero-latency women safety web platform engineered with pure client-side web technologies and inspired by the concept of zero-gravity fearlessness.">
+      <div class="flex justify-between items-start">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold">
+          <span>🎓 Academic Project Presentation</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+          <span>B.Tech / BCA / MCA Capstone</span>
+        </div>
+        <span class="text-stone-500 text-xs font-mono">Department of Computer Science & Engineering</span>
+      </div>
+
+      <div class="space-y-4 my-auto py-8">
+        <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+          Abhaya <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-400 to-rose-400">(अभय)</span>
+        </h1>
+        <p class="text-xl sm:text-2xl font-light text-stone-300 max-w-3xl">
+          Client-Side Intelligent Women Safety, Rapid Crisis Intervention & Legal Empowerment Web Platform
+        </p>
+        <p class="text-sm text-stone-400 italic">
+          "Zero-Gravity of Fear: Defying Fear, Living with Absolute Dignity & Peace"
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-stone-800 text-xs text-stone-400">
+        <div>
+          <span class="block text-stone-500 uppercase tracking-wider text-[10px]">Presented By</span>
+          <strong class="text-stone-200 text-sm">Student Name / Project Team</strong>
+        </div>
+        <div>
+          <span class="block text-stone-500 uppercase tracking-wider text-[10px]">Academic Mentor</span>
+          <strong class="text-stone-200 text-sm">Prof. / Project Supervisor</strong>
+        </div>
+        <div>
+          <span class="block text-stone-500 uppercase tracking-wider text-[10px]">Institution</span>
+          <strong class="text-stone-200 text-sm">College / University Name</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Problem Statement & Motivation -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Highlight the critical vulnerabilities of existing apps: network latency, cloud login barriers, and retaliation danger when opening a police app.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">01. Problem Statement</span>
+        <h2 class="text-3xl font-black text-white mt-1">Why Conventional Safety Apps Fail in Real Emergencies</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto py-6">
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center text-2xl font-bold">⏱️</div>
+          <h3 class="text-lg font-bold text-white">Network & Auth Latency</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Commercial apps require OTP logins, password sync, and cloud servers. If the user is in a low-reception alley or zero-data zone, the app stalls.
+          </p>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-bold">👀</div>
+          <h3 class="text-lg font-bold text-white">Aggressor Retaliation</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            If a suspicious driver or stalker sees a victim opening a brightly branded "Police SOS" app, panic escalates into immediate physical aggression.
+          </p>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl font-bold">📢</div>
+          <h3 class="text-lg font-bold text-white">Absence of Audible Deterrents</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Silent SMS alerts don't scare off an attacker in a deserted street. An instant, ear-piercing crowd alarm is vital to disorient assailants.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+        <span><strong>Key Takeaway:</strong> An emergency tool must be instantaneous, zero-login, and psychologically smart.</span>
+        <span class="text-amber-400 font-mono">Response Time Target: &lt; 1 Second</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Thematic Concept & Ghibli Visual Metaphor -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Explain the artistic vision: the Studio Ghibli zero gravity grandmother symbolizes the removal of the weight of fear. In Indian villages and cities alike, safety must bring total peace of mind.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">02. Design Philosophy</span>
+        <h2 class="text-3xl font-black text-white mt-1">The Visual Metaphor: "Zero-Gravity of Fear"</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto py-6">
+        <div class="lg:col-span-7 space-y-4">
+          <h3 class="text-2xl font-bold text-stone-100">
+            Defying Gravity, Defying Fear, Living in Complete Calm.
+          </h3>
+          <p class="text-xs sm:text-sm text-stone-300 leading-relaxed">
+            Inspired by Studio Ghibli's serene world-building, our platform is anchored by the imagery of a 75-year-old grandmother floating weightlessly in her thatched village hut, surrounded by burning diyas and utensils.
+          </p>
+          <div class="space-y-2">
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200">
+              <strong>Ancestral Protection:</strong> Grandmothers in Indian culture symbolize unshakeable courage, resilience, and rooted community wisdom.
+            </div>
+            <div class="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-200">
+              <strong>The Zero-Gravity Symbol:</strong> Just as gravity weighs down physical matter, fear weighs down women's dreams and mobility. When safety is guaranteed, fear has zero weight.
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="rounded-2xl overflow-hidden border-2 border-stone-700 shadow-2xl max-w-sm group">
+            <img src="./ghibli_grandmother.jpg" alt="Ghibli Anti-Gravity Grandmother" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+            <div class="bg-stone-900 p-2.5 text-center text-[11px] text-stone-400 border-t border-stone-800">
+              अभय (Abhaya): The Floating Sanctuary • Studio Ghibli Style
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-xs text-stone-500 border-t border-stone-800 pt-3">
+        Artistic integration bridges high technology with emotional reassurance and human dignity.
+      </div>
+    </section>
+
+    <!-- SLIDE 4: System Architecture & Technical Specifications -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Walk examiners through the technical stack: why client-side execution delivers zero latency and 100% privacy compliance.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">03. System Architecture</span>
+        <h2 class="text-3xl font-black text-white mt-1">Client-Side Zero-Latency Technical Stack</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 my-auto py-6">
+        <div class="card-glass p-5 rounded-2xl border border-stone-800">
+          <span class="text-2xl block mb-2">⚡</span>
+          <h4 class="font-bold text-white text-sm">Pure Client-Side</h4>
+          <p class="text-xs text-stone-400 mt-1">
+            Zero backend server round-trips. Executes entirely in browser memory. Instant response even on throttled 2G networks.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800">
+          <span class="text-2xl block mb-2">🔊</span>
+          <h4 class="font-bold text-white text-sm">Web Audio API</h4>
+          <p class="text-xs text-stone-400 mt-1">
+            Synthesizes sound directly via browser `AudioContext` and `OscillatorNode`. No external audio files to download.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800">
+          <span class="text-2xl block mb-2">📍</span>
+          <h4 class="font-bold text-white text-sm">Geolocation API</h4>
+          <p class="text-xs text-stone-400 mt-1">
+            Direct browser GPS queries with `enableHighAccuracy: true`. Formats real-time Google Maps pinpoint coordinates.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800">
+          <span class="text-2xl block mb-2">🔒</span>
+          <h4 class="font-bold text-white text-sm">Zero-Tracking Storage</h4>
+          <p class="text-xs text-stone-400 mt-1">
+            Emergency contacts stored strictly on the local device via HTML5 `localStorage`. Full DPDP & GDPR privacy compliance.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-xs text-stone-400">
+        <strong>Protocol Handlers:</strong> Deep links to OS-native dialers (`tel:112`), SMS clients (`sms:?body=`), and WhatsApp dispatch (`wa.me/?text=`).
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Feature Deep Dive: Emergency SOS & GPS Broadcast -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Demonstrate the 5-second countdown safeguard. Accidental taps happen; the countdown gives 5 seconds to cancel, but allows an instant 'Send Now' override.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">04. Core Feature #1</span>
+        <h2 class="text-3xl font-black text-white mt-1">Rapid SOS Dispatch with 5-Second Safeguard</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center my-auto py-6">
+        <div class="space-y-4">
+          <h3 class="text-xl font-bold text-stone-100">Engineering the Perfect Emergency Trigger</h3>
+          <ul class="space-y-3 text-xs sm:text-sm text-stone-300">
+            <li class="flex items-start space-x-2">
+              <span class="text-rose-400 font-bold">✓</span>
+              <span><strong>5-Second Cancellation Window:</strong> Prevents false alarms when the phone is in a handbag or pocket.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-rose-400 font-bold">✓</span>
+              <span><strong>Instant Override:</strong> A "Send Now" button allows immediate bypassing of the countdown.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-rose-400 font-bold">✓</span>
+              <span><strong>Dynamic Google Maps Pin:</strong> Automatically packages live latitude/longitude into a universal link.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <span class="text-rose-400 font-bold">✓</span>
+              <span><strong>Multi-Channel Broadcast:</strong> Pre-populates emergency message drafts to both WhatsApp and SMS.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-4 text-center">
+          <div class="w-20 h-20 mx-auto rounded-full bg-rose-500/20 border-2 border-rose-500 flex items-center justify-center animate-pulse">
+            <span class="text-3xl font-black text-rose-400">5s</span>
+          </div>
+          <div class="text-left bg-stone-950 p-3 rounded-xl border border-stone-800 font-mono text-[11px] text-emerald-400">
+            🚨 EMERGENCY SOS BROADCAST:<br>
+            "I need urgent assistance! My live GPS location:<br>
+            https://maps.google.com/?q=28.6139,77.2090"
+          </div>
+        </div>
+      </div>
+
+      <div class="text-xs text-stone-500 border-t border-stone-800 pt-3">
+        Works seamlessly on all mobile browsers without native app store download barriers.
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Feature Deep Dive: Web Audio Deterrent Suite -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Explain the Web Audio synthesizer. We do not load MP3 files over the internet. The browser's audio oscillator generates piercing acoustic deterrents right on the spot.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">05. Core Feature #2</span>
+        <h2 class="text-3xl font-black text-white mt-1">Web Audio Deterrent Suite (Siren & Whistle)</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-auto py-6">
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-2xl font-bold">📢</div>
+          <h3 class="text-lg font-bold text-white">Synthesized Police Siren</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Uses a <strong>sawtooth waveform</strong> oscillator sweeping continuously between <strong>700 Hz and 1300 Hz</strong> with an exponential ramp every 400 milliseconds. Emulates authentic high-decibel emergency response vehicles.
+          </p>
+          <div class="bg-stone-900 p-2 rounded-lg text-[11px] font-mono text-stone-300">
+            OscillatorType: 'sawtooth' | Freq: 700Hz - 1300Hz
+          </div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl font-bold">🔊</div>
+          <h3 class="text-lg font-bold text-white">Staccato Whistle Burst</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Generates a high-pitch <strong>sine waveform</strong> ramping from <strong>2600 Hz to 3200 Hz</strong> in rapid 3-stage bursts. Pierces ambient background traffic noise to alert nearby citizens.
+          </p>
+          <div class="bg-stone-900 p-2 rounded-lg text-[11px] font-mono text-stone-300">
+            OscillatorType: 'sine' | Freq: 2600Hz - 3200Hz
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-xs text-stone-400">
+        <strong>Acoustic Advantage:</strong> Because audio is generated programmatically, it requires 0 kB of asset streaming and plays instantly upon button click.
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Feature Deep Dive: Psychological & Deceptive Defense -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Showcase the two deceptive features: Fake Call to exit uncomfortable situations without conflict, and Calculator Camouflage to prevent phone snooping.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">06. Core Feature #3</span>
+        <h2 class="text-3xl font-black text-white mt-1">Psychological Defense & Deceptive Camouflage</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-auto py-6">
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">📲</span>
+            <span class="text-[10px] uppercase font-bold bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">De-escalation Tool</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Discreet Fake Incoming Call</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Provides an immediate, polite excuse to exit an uncomfortable cab, date, or street encounter.
+          </p>
+          <ul class="text-xs text-stone-300 space-y-1">
+            <li>• Presets: <em>Papa (Dad)</em>, <em>Inspector Sharma</em>, <em>Bhaiya</em>.</li>
+            <li>• Realistic synthesized 440Hz telephony ringtone.</li>
+            <li>• Active call script: <em>"Haan beta, police post pe khada hoon..."</em></li>
+          </ul>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-2xl">🛡️</span>
+            <span class="text-[10px] uppercase font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Anti-Snooping</span>
+          </div>
+          <h3 class="text-lg font-bold text-white">Discreet Calculator Camouflage</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            If an aggressor forcefully looks at the screen, one tap converts the entire UI into a functional dark-mode math calculator.
+          </p>
+          <ul class="text-xs text-stone-300 space-y-1">
+            <li>• Real working arithmetic calculations (`7 × 8 = 56`).</li>
+            <li>• Secret double-click escape gesture to restore portal.</li>
+            <li>• Completely eliminates suspicion.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-xs text-stone-500 border-t border-stone-800 pt-3">
+        Combines technical safety with human psychology to defuse hostile situations safely.
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Feature Deep Dive: Journey Guardian & Contacts -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Explain the Journey Guardian travel timer and the local storage safety circle.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">07. Core Feature #4</span>
+        <h2 class="text-3xl font-black text-white mt-1">Journey Guardian & Safety Circle</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-auto py-6">
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <span class="text-2xl block">⏱️</span>
+          <h3 class="text-lg font-bold text-white">Journey Guardian (Transit Check-In)</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Designed for students commuting between the campus, library, coaching institutes, or hostels late at night.
+          </p>
+          <div class="space-y-2 text-xs text-stone-300">
+            <p>1. User sets expected transit duration (e.g. 10 or 30 minutes).</p>
+            <p>2. Active timer runs in the background with continuous display.</p>
+            <p>3. If the user fails to tap <strong>"I'm Safe"</strong> before expiry, an audible alert chimes and triggers automatic emergency SOS protocol.</p>
+          </div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl border border-stone-800 space-y-3">
+          <span class="text-2xl block">🤝</span>
+          <h3 class="text-lg font-bold text-white">Private Safety Circle (Contact Manager)</h3>
+          <p class="text-xs text-stone-400 leading-relaxed">
+            Allows users to configure up to 5 primary trusted contacts (Parents, Siblings, Friends, Roommates).
+          </p>
+          <div class="space-y-2 text-xs text-stone-300">
+            <p>• Stored 100% locally in device memory using HTML5 `localStorage`.</p>
+            <p>• Direct speed-dial and individual WhatsApp SOS options.</p>
+            <p>• Absolute privacy: No contact data leaves the browser.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-xs text-stone-400">
+        Empowers women with proactive transit monitoring rather than only reactive post-incident measures.
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Statutory Legal Rights & National Helplines -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Educating users on their statutory rights is half the battle. Explain Zero FIR, CrPC 46(4), and the PoSH Act.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">08. Legal Empowerment</span>
+        <h2 class="text-3xl font-black text-white mt-1">Constitutional Rights Vault & Emergency Helplines</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-auto py-6">
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-rose-400">Statutory Rights (India)</h4>
+          <div class="space-y-2 text-xs text-stone-300">
+            <div class="p-2.5 rounded-xl bg-stone-900 border border-stone-800">
+              <strong>📜 Right to Zero FIR:</strong> Lodged at ANY police station regardless of jurisdiction.
+            </div>
+            <div class="p-2.5 rounded-xl bg-stone-900 border border-stone-800">
+              <strong>🌙 Section 46(4) CrPC:</strong> Women cannot be arrested after sunset and before sunrise.
+            </div>
+            <div class="p-2.5 rounded-xl bg-stone-900 border border-stone-800">
+              <strong>💼 PoSH Act 2013:</strong> Mandatory Internal Complaints Committee (ICC) in every college & office.
+            </div>
+            <div class="p-2.5 rounded-xl bg-stone-900 border border-stone-800">
+              <strong>🔒 Section 228A IPC:</strong> Complete prohibition of identity disclosure for victims.
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400">24x7 Official Helpline Directory</h4>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-center">
+              <span class="text-lg font-black text-rose-400">112</span>
+              <p class="text-[11px] text-stone-400 mt-1">National Emergency</p>
+            </div>
+            <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-center">
+              <span class="text-lg font-black text-amber-400">1091</span>
+              <p class="text-[11px] text-stone-400 mt-1">Women in Distress</p>
+            </div>
+            <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-center">
+              <span class="text-lg font-black text-stone-200">1090</span>
+              <p class="text-[11px] text-stone-400 mt-1">Women Power Line</p>
+            </div>
+            <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-center">
+              <span class="text-lg font-black text-stone-200">181</span>
+              <p class="text-[11px] text-stone-400 mt-1">Domestic Violence</p>
+            </div>
+          </div>
+          <p class="text-[11px] text-stone-500 italic text-center">All numbers connect toll-free on any basic mobile phone without cellular balance.</p>
+        </div>
+      </div>
+
+      <div class="text-xs text-stone-500 border-t border-stone-800 pt-3">
+        Knowledge of statutory rights converts fear into lawful authority and confidence.
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Campus Website Integration Strategy -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Show how the college can deploy Abhaya directly on its campus domain under /safety or /womencell.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">09. Institutional Deployment</span>
+        <h2 class="text-3xl font-black text-white mt-1">College & Campus Website Integration Strategy</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto py-6">
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">1</div>
+          <h3 class="text-base font-bold text-white">Campus Security Desk</h3>
+          <p class="text-xs text-stone-400">
+            Direct speed-dial routing to the Chief Proctor, Main Gate Security Guard Booth, and 24x7 Campus Patrol Vans.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">2</div>
+          <h3 class="text-base font-bold text-white">Hostel Curfew & Transit</h3>
+          <p class="text-xs text-stone-400">
+            Hostel warden speed-dials and Journey Guardian preset for girls commuting late from laboratories or library sessions.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">3</div>
+          <h3 class="text-base font-bold text-white">Internal Complaints Cell (ICC)</h3>
+          <p class="text-xs text-stone-400">
+            Direct confidential portal to file PoSH Act grievances without having to visit the administrative building in person.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-3 bg-stone-900 rounded-xl border border-stone-800 text-xs text-stone-400 flex items-center justify-between">
+        <span><strong>Deployment Model:</strong> Host on <code>college.edu/safety</code> or link via QR codes on student ID cards.</span>
+        <span class="text-emerald-400 font-mono">Zero Server Maintenance Required</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Competitive Edge & Key Innovations -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Summarize what makes Abhaya superior to generic apps in academic and practical terms.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">10. Competitive Edge</span>
+        <h2 class="text-3xl font-black text-white mt-1">Why Abhaya Stands Out</h2>
+      </div>
+
+      <div class="overflow-x-auto my-auto py-6">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-stone-800 text-stone-400">
+              <th class="py-3 px-4">Evaluation Criteria</th>
+              <th class="py-3 px-4">Standard Mobile Safety Apps</th>
+              <th class="py-3 px-4 text-rose-400 font-bold">Abhaya Web Platform</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-stone-800/60 text-stone-300">
+            <tr>
+              <td class="py-3 px-4 font-semibold text-white">Installation Overhead</td>
+              <td class="py-3 px-4 text-stone-400">Requires App Store / Play Store download (50+ MB)</td>
+              <td class="py-3 px-4 text-emerald-400 font-semibold">Zero install — opens instantly in 1 click</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-white">Login / Authentication</td>
+              <td class="py-3 px-4 text-stone-400">Mandatory phone number / OTP authentication</td>
+              <td class="py-3 px-4 text-emerald-400 font-semibold">Zero login required — instant emergency readiness</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-white">Data Privacy</td>
+              <td class="py-3 px-4 text-stone-400">Uploads location & contacts to cloud servers</td>
+              <td class="py-3 px-4 text-emerald-400 font-semibold">100% Client-side (`localStorage`) — zero tracking</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-white">Acoustic Deterrent</td>
+              <td class="py-3 px-4 text-stone-400">Usually absent or requires audio file download</td>
+              <td class="py-3 px-4 text-emerald-400 font-semibold">Native Web Audio oscillator (Siren & Whistle)</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 font-semibold text-white">Anti-Snooping Protection</td>
+              <td class="py-3 px-4 text-stone-400">None (app remains visibly identifiable)</td>
+              <td class="py-3 px-4 text-emerald-400 font-semibold">Working Calculator camouflage mode</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-xs text-stone-500 border-t border-stone-800 pt-3">
+        Delivers maximum survivability, discretion, and technical robustness with minimal system overhead.
+      </div>
+    </section>
+
+    <!-- SLIDE 12: Future Scope & Conclusion -->
+    <section class="slide w-full flex-col justify-between rounded-3xl bg-gradient-slide p-8 sm:p-14 border border-stone-800 shadow-2xl min-h-[580px]" data-notes="Conclude with the roadmap: PWA installation, BLE smart jewelry, and campus geofencing. Invite questions from the evaluation committee.">
+      <div class="border-b border-stone-800 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">11. Conclusion & Roadmap</span>
+        <h2 class="text-3xl font-black text-white mt-1">Future Scope & Concluding Thoughts</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-auto py-6">
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-2">
+          <span class="text-2xl">📱</span>
+          <h4 class="font-bold text-white text-sm">PWA Offline Caching</h4>
+          <p class="text-xs text-stone-400">
+            Adding a Progressive Web App service worker for full offline desktop/mobile homescreen installation.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-2">
+          <span class="text-2xl">💍</span>
+          <h4 class="font-bold text-white text-sm">BLE IoT Smart Ring Trigger</h4>
+          <p class="text-xs text-stone-400">
+            Hardware panic button integration using Web Bluetooth API to trigger SOS without touching the phone screen.
+          </p>
+        </div>
+
+        <div class="card-glass p-5 rounded-2xl border border-stone-800 space-y-2">
+          <span class="text-2xl">📡</span>
+          <h4 class="font-bold text-white text-sm">Campus Wi-Fi Geofencing</h4>
+          <p class="text-xs text-stone-400">
+            Automatic location logging with campus security cameras when traversing isolated university zones.
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center space-y-2 py-4 border-t border-stone-800">
+        <h3 class="text-2xl font-black text-white">Thank You!</h3>
+        <p class="text-xs text-stone-400">Open for Questions & Faculty Evaluation</p>
+        <div class="flex justify-center space-x-4 text-xs font-mono text-amber-400 pt-1">
+          <span>Portal: raksha-women-safety</span>
+          <span>•</span>
+          <span>Architecture: Zero-Latency Client-Side</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Speaker Notes Modal (Hidden by default) -->
+  <div id="notes-modal" class="no-print hidden fixed bottom-20 right-8 max-w-md w-full bg-stone-900 border border-stone-700 rounded-2xl p-5 shadow-2xl z-40">
+    <div class="flex justify-between items-center mb-2 border-b border-stone-800 pb-2">
+      <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">🎙️ Speaker Notes (Slide <span id="notes-slide-num">1</span>)</span>
+      <button onclick="toggleSpeakerNotes()" class="text-stone-400 hover:text-white text-xs">✕ Close</button>
+    </div>
+    <p id="notes-content" class="text-xs text-stone-300 leading-relaxed italic">
+      Welcome examiners...
+    </p>
+  </div>
+
+  <!-- Bottom Navigation Bar (No Print) -->
+  <footer class="no-print bg-stone-900/90 backdrop-blur border-t border-stone-800 px-6 py-4 flex items-center justify-between z-30">
+    <div class="text-xs text-stone-400 hidden sm:block">
+      Use <kbd class="px-2 py-1 bg-stone-800 rounded border border-stone-700 text-stone-300">←</kbd> <kbd class="px-2 py-1 bg-stone-800 rounded border border-stone-700 text-stone-300">→</kbd> or <kbd class="px-2 py-1 bg-stone-800 rounded border border-stone-700 text-stone-300">Space</kbd> to navigate
+    </div>
+
+    <!-- Slide progress bar -->
+    <div class="flex-1 max-w-xs mx-4 bg-stone-800 h-1.5 rounded-full overflow-hidden">
+      <div id="progress-bar" class="bg-gradient-to-r from-rose-600 to-amber-500 h-full w-[8.33%] transition-all duration-300"></div>
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <button onclick="prevSlide()" id="prev-btn" class="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold transition disabled:opacity-30 disabled:cursor-not-allowed">
+        ◀ Previous
+      </button>
+      <button onclick="nextSlide()" id="next-btn" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition shadow-md">
+        Next ▶
+      </button>
+    </div>
+  </footer>
+
+  <!-- Slide Deck Navigation Logic -->
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const indicator = document.getElementById('slide-indicator');
+    const progressBar = document.getElementById('progress-bar');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const notesModal = document.getElementById('notes-modal');
+    const notesContent = document.getElementById('notes-content');
+    const notesSlideNum = document.getElementById('notes-slide-num');
+
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        if (idx === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      indicator.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+      progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.textContent = currentSlide === totalSlides - 1 ? 'Finish 🏁' : 'Next ▶';
+
+      // Update speaker notes
+      const note = slides[currentSlide].getAttribute('data-notes') || 'No speaker notes for this slide.';
+      notesContent.textContent = note;
+      notesSlideNum.textContent = currentSlide + 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleSpeakerNotes() {
+      notesModal.classList.toggle('hidden');
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(e => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard events
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      } else if (e.key.toLowerCase() === 'n') {
+        toggleSpeakerNotes();
+      }
+    });
+
+    // Initialize
+    updateSlide();
+  </script>
+</body>
+</html>

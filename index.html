@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhaya (अभय) - Women's Safety & Empowerment Platform</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 24px rgba(239, 68, 68, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .animate-pulse-ring {
+      animation: pulse-ring 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+    .floating-anim {
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    .gradient-hero {
+      background: linear-gradient(135deg, #FFF7ED 0%, #FEF2F2 50%, #FFFBEB 100%);
+    }
+    .dark .gradient-hero {
+      background: linear-gradient(135deg, #1C1917 0%, #291515 50%, #1E1B18 100%);
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 min-h-screen font-sans antialiased selection:bg-rose-200">
+  <!-- Camouflage Calculator Mode (Hidden by default) -->
+  <div id="camouflage-container" class="hidden fixed inset-0 z-50 bg-stone-900 text-white flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-stone-800 rounded-3xl p-6 shadow-2xl border border-stone-700">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xs uppercase tracking-wider text-stone-400">Calculator</span>
+        <button id="exit-camouflage-btn" class="text-xs px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-stone-300">
+          Exit (Double Click)
+        </button>
+      </div>
+      <div id="calc-display" class="bg-stone-900 text-right text-3xl font-mono p-4 rounded-xl mb-4 overflow-x-auto min-h-[64px] flex items-center justify-end text-emerald-400">
+        0
+      </div>
+      <div class="grid grid-cols-4 gap-3 text-lg font-medium">
+        <button onclick="calcClear()" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl text-amber-400">C</button>
+        <button onclick="calcInput('(')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">(</button>
+        <button onclick="calcInput(')')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">)</button>
+        <button onclick="calcInput('/')" class="p-3 bg-amber-600 hover:bg-amber-500 rounded-xl">÷</button>
+        <button onclick="calcInput('7')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">7</button>
+        <button onclick="calcInput('8')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">8</button>
+        <button onclick="calcInput('9')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">9</button>
+        <button onclick="calcInput('*')" class="p-3 bg-amber-600 hover:bg-amber-500 rounded-xl">×</button>
+        <button onclick="calcInput('4')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">4</button>
+        <button onclick="calcInput('5')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">5</button>
+        <button onclick="calcInput('6')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">6</button>
+        <button onclick="calcInput('-')" class="p-3 bg-amber-600 hover:bg-amber-500 rounded-xl">-</button>
+        <button onclick="calcInput('1')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">1</button>
+        <button onclick="calcInput('2')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">2</button>
+        <button onclick="calcInput('3')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">3</button>
+        <button onclick="calcInput('+')" class="p-3 bg-amber-600 hover:bg-amber-500 rounded-xl">+</button>
+        <button onclick="calcInput('0')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl col-span-2">0</button>
+        <button onclick="calcInput('.')" class="p-3 bg-stone-700 hover:bg-stone-600 rounded-xl">.</button>
+        <button onclick="calcEval()" class="p-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl">=</button>
+      </div>
+      <p class="text-[11px] text-stone-500 text-center mt-4">Double-tap 'Exit' to return to safe portal</p>
+    </div>
+  </div>
+
+  <!-- Fake Call Screen Modal (Hidden by default) -->
+  <div id="fake-call-modal" class="hidden fixed inset-0 z-50 bg-stone-950 flex flex-col justify-between p-8 text-white">
+    <div class="text-center pt-12">
+      <div class="w-24 h-24 mx-auto rounded-full bg-stone-800 border-2 border-stone-600 flex items-center justify-center text-4xl mb-4 shadow-lg shadow-rose-900/20">
+        👮‍♂️
+      </div>
+      <h2 id="fake-caller-name" class="text-2xl font-bold tracking-wide">Papa (Dad)</h2>
+      <p id="fake-call-status" class="text-stone-400 text-sm mt-1 animate-pulse">Incoming Call...</p>
+    </div>
+    
+    <div id="call-active-script" class="hidden max-w-md mx-auto bg-stone-900/80 border border-stone-800 rounded-2xl p-4 text-center text-stone-300 text-sm">
+      <p class="text-emerald-400 font-medium mb-1">Speaker on: Simulated Voice</p>
+      <p class="italic">"Haan beta, main 2 minute mein police post ke saamne pahunch raha hoon. Gaadi side mein roko, main wahin khada hoon."</p>
+    </div>
+
+    <div class="pb-12 flex justify-around items-center max-w-xs mx-auto w-full">
+      <button onclick="declineFakeCall()" class="w-16 h-16 rounded-full bg-red-600 hover:bg-red-700 flex items-center justify-center shadow-lg transform transition active:scale-95">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.684A1 1 0 008.279 3H5z"></path></svg>
+      </button>
+      <button onclick="answerFakeCall()" id="answer-call-btn" class="w-16 h-16 rounded-full bg-emerald-600 hover:bg-emerald-700 flex items-center justify-center shadow-lg animate-bounce transform transition active:scale-95">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Top Sticky Navigation & Quick SOS Bar -->
+  <header class="sticky top-0 z-40 bg-stone-900/95 backdrop-blur-md text-white border-b border-stone-800 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center font-bold text-lg text-white shadow-md">
+          अभ
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight flex items-center space-x-2">
+            <span>Abhaya</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">अभय • Safe & Fearless</span>
+          </h1>
+          <p class="text-[12px] text-stone-400">Zero-Gravity Peace of Mind for Women</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Language Switcher -->
+        <button onclick="toggleLanguage()" class="px-2.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-medium text-stone-300 border border-stone-700 transition">
+          <span id="lang-btn-label">हिन्दी</span>
+        </button>
+
+        <!-- Camouflage / Discreet Mode -->
+        <button onclick="enterCamouflage()" title="Disguise as Calculator" class="flex items-center space-x-1 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-xs font-medium text-stone-300 border border-stone-700 transition">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          <span class="hidden sm:inline">Discreet Calc</span>
+        </button>
+
+        <!-- National Emergency Direct Dial -->
+        <a href="tel:112" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition shadow-sm animate-pulse">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+          <span>Call 112</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-8">
+    
+    <!-- Hero Guardian Section (Studio Ghibli Anti-Gravity Theme) -->
+    <section class="gradient-hero rounded-3xl p-6 sm:p-8 border border-amber-200/60 shadow-xl overflow-hidden relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-4">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-xs font-semibold">
+            <span>✨ The Spirit of Fearlessness (अभय)</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            <span>Zero Fear. Infinite Strength.</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-900 leading-tight">
+            Defying Fear. <br>
+            <span class="text-rose-600">Floating Freely</span> in Complete Peace.
+          </h2>
+
+          <p class="text-stone-700 text-base sm:text-lg leading-relaxed">
+            Inspired by the timeless wisdom and calm of our elders, <strong class="text-stone-900 font-semibold">Abhaya</strong> is your instant shield. Whether traversing quiet village pathways or bustling city streets at midnight, fear should never weigh you down.
+          </p>
+
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="triggerSOSCountdown()" class="px-6 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl shadow-lg shadow-rose-600/30 flex items-center space-x-2 transition transform hover:-translate-y-0.5 active:translate-y-0">
+              <span class="w-3 h-3 rounded-full bg-white animate-ping"></span>
+              <span id="txt-instant-sos">🚨 ACTIVATE SOS ALERT</span>
+            </button>
+            <button onclick="toggleSiren()" id="hero-siren-btn" class="px-5 py-3.5 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold rounded-2xl shadow-md flex items-center space-x-2 transition">
+              <span id="hero-siren-icon">📢</span>
+              <span id="hero-siren-text">Loud Alarm / Siren</span>
+            </button>
+            <button onclick="openFakeCallPrompt()" class="px-5 py-3.5 bg-stone-800 hover:bg-stone-900 text-white font-semibold rounded-2xl shadow-md flex items-center space-x-2 transition">
+              <span>📞</span>
+              <span>Fake Call Escape</span>
+            </button>
+          </div>
+
+          <!-- Live Status & GPS Bar -->
+          <div class="mt-4 p-3.5 bg-white/80 backdrop-blur rounded-2xl border border-amber-200 text-xs text-stone-600 flex flex-wrap items-center justify-between gap-2 shadow-sm">
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span id="gps-status-text">Location Ready: Click 'Share Live GPS' anytime</span>
+            </div>
+            <button onclick="fetchAndShareGPS()" class="text-rose-700 hover:text-rose-800 font-bold underline flex items-center space-x-1">
+              <span>📍 Share Coordinates via WhatsApp</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Floating Ghibli Grandmother Artwork Embed -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <div class="relative w-full max-w-md rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-amber-100 group">
+            <img src="./ghibli_grandmother.jpg" alt="Studio Ghibli style Indian Grandmother floating serenely in zero gravity hut" class="w-full h-auto object-cover transform transition duration-700 group-hover:scale-105">
+            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-stone-950/80 via-stone-950/40 to-transparent p-4 text-white">
+              <p class="text-xs font-semibold tracking-wide text-amber-300">अभय (Abhaya): The Floating Sanctuary</p>
+              <p class="text-[11px] text-stone-200">Defying gravity, untethered by fear, calm like the grandmother in her village home.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOS Trigger Modal / Active Countdown -->
+    <div id="sos-countdown-modal" class="hidden fixed inset-0 z-50 bg-stone-950/90 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl border-4 border-rose-600 space-y-6">
+        <div class="w-24 h-24 mx-auto rounded-full bg-rose-100 border-4 border-rose-600 flex items-center justify-center animate-pulse-ring">
+          <span id="countdown-number" class="text-5xl font-black text-rose-600">5</span>
+        </div>
+        <div>
+          <h3 class="text-2xl font-black text-stone-900">EMERGENCY SOS INITIATED</h3>
+          <p class="text-sm text-stone-600 mt-2">
+            Sending your live coordinates & alerting your emergency contacts + local helpline in 5 seconds.
+          </p>
+        </div>
+        <div class="flex space-x-3">
+          <button onclick="cancelSOSCountdown()" class="w-1/2 py-3 bg-stone-200 hover:bg-stone-300 text-stone-800 font-bold rounded-xl transition">
+            CANCEL (Safe)
+          </button>
+          <button onclick="executeSOSImmediate()" class="w-1/2 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition">
+            SEND NOW
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Emergency Toolkit Grid -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-bold text-stone-900 flex items-center space-x-2">
+          <span>⚡ Emergency Defense & Deterrent Suite</span>
+        </h3>
+        <span class="text-xs text-stone-500 font-medium">All tools run in-browser with zero latency</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1: Siren & Whistle -->
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-3">
+              🔊
+            </div>
+            <h4 class="font-bold text-stone-900 text-base">Sonic Alarm Deterrent</h4>
+            <p class="text-xs text-stone-600 mt-1">
+              Piercing synthesized 120dB frequency siren & police whistle to disorient attacker and attract crowd.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100 space-y-2">
+            <button onclick="toggleSiren()" id="tool-siren-btn" class="w-full py-2.5 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5">
+              <span>Start Police Siren</span>
+            </button>
+            <button onclick="playWhistleBurst()" class="w-full py-2 px-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-semibold transition">
+              Sound Whistle Blast (3x)
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Fake Call Generator -->
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-3">
+              📲
+            </div>
+            <h4 class="font-bold text-stone-900 text-base">Discreet Escape Call</h4>
+            <p class="text-xs text-stone-600 mt-1">
+              Simulate an urgent incoming call from family or police officer to gracefully exit uncomfortable situations.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100 space-y-2">
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="scheduleFakeCall(5, 'Papa (Dad)')" class="py-1.5 px-2 bg-stone-100 hover:bg-blue-50 text-stone-800 text-[11px] rounded-lg font-medium border border-stone-200">
+                In 5 sec
+              </button>
+              <button onclick="scheduleFakeCall(15, 'Inspector Sharma')" class="py-1.5 px-2 bg-stone-100 hover:bg-blue-50 text-stone-800 text-[11px] rounded-lg font-medium border border-stone-200">
+                In 15 sec
+              </button>
+            </div>
+            <button onclick="scheduleFakeCall(0, 'Papa (Dad)')" class="w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition">
+              Trigger Call Instantly
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Journey Guardian (Timer Check-In) -->
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-3">
+              ⏱️
+            </div>
+            <h4 class="font-bold text-stone-900 text-base">Travel Check-In Timer</h4>
+            <p class="text-xs text-stone-600 mt-1">
+              Heading into an auto/cab or dark alley? Set a timer. If you don't check in safe, alerts trigger.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100 space-y-2">
+            <div id="guardian-timer-display" class="text-center font-mono font-bold text-stone-800 text-sm py-1 bg-stone-50 rounded-lg">
+              Timer: Inactive
+            </div>
+            <div class="flex space-x-1.5">
+              <button onclick="startGuardianTimer(10)" class="w-1/2 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition">
+                Start 10 Min
+              </button>
+              <button onclick="stopGuardianTimer()" class="w-1/2 py-2 bg-stone-200 hover:bg-stone-300 text-stone-800 text-xs font-semibold rounded-xl transition">
+                I'm Safe
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Camouflage Screen -->
+        <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl mb-3">
+              🛡️
+            </div>
+            <h4 class="font-bold text-stone-900 text-base">Discreet Camouflage</h4>
+            <p class="text-xs text-stone-600 mt-1">
+              If someone is snooping at your screen, tap this to instantly turn the screen into a working math calculator.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-stone-100">
+            <button onclick="enterCamouflage()" class="w-full py-2.5 px-3 rounded-xl bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5">
+              <span>Switch to Calculator</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Contacts Circle & Live Location Sharing -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Left Column: Trusted Contacts Manager -->
+      <div class="lg:col-span-7 bg-white rounded-3xl p-6 border border-stone-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-stone-100 pb-3">
+          <div>
+            <h3 class="text-lg font-bold text-stone-900 flex items-center space-x-2">
+              <span>🤝 My Safety Circle (Trusted Contacts)</span>
+            </h3>
+            <p class="text-xs text-stone-500">Stored safely on your device. Never uploaded to servers.</p>
+          </div>
+          <button onclick="openAddContactModal()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition">
+            + Add Contact
+          </button>
+        </div>
+
+        <div id="contacts-list" class="space-y-2.5">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="pt-2 flex flex-wrap gap-2">
+          <button onclick="broadcastEmergencyWhatsApp()" class="flex-1 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center space-x-2">
+            <span>💬 Broadcast SOS via WhatsApp</span>
+          </button>
+          <button onclick="broadcastEmergencySMS()" class="flex-1 py-2.5 px-4 bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center space-x-2">
+            <span>📩 Send Emergency SMS Draft</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Official Helplines Directory -->
+      <div class="lg:col-span-5 bg-white rounded-3xl p-6 border border-stone-200 shadow-sm space-y-4">
+        <div class="border-b border-stone-100 pb-3">
+          <h3 class="text-lg font-bold text-stone-900 flex items-center space-x-2">
+            <span>☎️ Verified Official Helplines</span>
+          </h3>
+          <p class="text-xs text-stone-500">24x7 Toll-Free National & State Emergency Lines</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <!-- 112 -->
+          <a href="tel:112" class="p-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-2xl flex items-center space-x-3 transition group">
+            <span class="w-10 h-10 rounded-xl bg-rose-600 text-white font-extrabold flex items-center justify-center text-sm shadow-sm">112</span>
+            <div>
+              <p class="text-xs font-bold text-stone-900 group-hover:text-rose-700">All India Emergency</p>
+              <p class="text-[11px] text-stone-500">Police, Fire, Ambulance</p>
+            </div>
+          </a>
+
+          <!-- 1091 -->
+          <a href="tel:1091" class="p-3 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-2xl flex items-center space-x-3 transition group">
+            <span class="w-10 h-10 rounded-xl bg-amber-600 text-white font-extrabold flex items-center justify-center text-sm shadow-sm">1091</span>
+            <div>
+              <p class="text-xs font-bold text-stone-900 group-hover:text-amber-800">Women Helpline</p>
+              <p class="text-[11px] text-stone-500">Immediate Police Distress</p>
+            </div>
+          </a>
+
+          <!-- 1090 -->
+          <a href="tel:1090" class="p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-2xl flex items-center space-x-3 transition group">
+            <span class="w-10 h-10 rounded-xl bg-stone-800 text-white font-extrabold flex items-center justify-center text-sm shadow-sm">1090</span>
+            <div>
+              <p class="text-xs font-bold text-stone-900">Women Power Line</p>
+              <p class="text-[11px] text-stone-500">Stalking & Cyber Crime</p>
+            </div>
+          </a>
+
+          <!-- 181 -->
+          <a href="tel:181" class="p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-2xl flex items-center space-x-3 transition group">
+            <span class="w-10 h-10 rounded-xl bg-stone-800 text-white font-extrabold flex items-center justify-center text-sm shadow-sm">181</span>
+            <div>
+              <p class="text-xs font-bold text-stone-900">Domestic Violence</p>
+              <p class="text-[11px] text-stone-500">Legal & Shelter Support</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200 text-xs text-amber-900 space-y-1">
+          <p class="font-bold flex items-center space-x-1">
+            <span>🛡️ National Commission for Women (NCW):</span>
+          </p>
+          <p class="text-[11px]">WhatsApp Helpline: <strong>+91 72177 35372</strong></p>
+          <p class="text-[11px]">Cyber Harassment Portal: <strong>1930</strong> (National Cyber Crime)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Empowerment Vault: Legal Rights & Physical Defense Guides -->
+    <section class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-100 pb-4">
+        <div>
+          <h3 class="text-2xl font-black text-stone-900">Empowerment & Defense Knowledge</h3>
+          <p class="text-xs sm:text-sm text-stone-600">Rights guaranteed by the Constitution and practical self-defense techniques.</p>
+        </div>
+        <!-- Tab selector -->
+        <div class="flex p-1 bg-stone-100 rounded-xl max-w-xs">
+          <button onclick="switchTab('rights')" id="tab-rights-btn" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold bg-white text-stone-900 shadow-sm transition">
+            ⚖️ Legal Rights
+          </button>
+          <button onclick="switchTab('defense')" id="tab-defense-btn" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-900 transition">
+            🥋 Physical Defense
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Content 1: Legal Rights -->
+      <div id="content-rights" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">📜</span>
+          <h4 class="font-bold text-stone-900 text-sm">Right to "Zero FIR"</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            You can lodge an FIR at <strong>ANY police station</strong> in India, regardless of where the incident occurred. Police cannot refuse on jurisdictional grounds.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">🌙</span>
+          <h4 class="font-bold text-stone-900 text-sm">No Arrest After Sunset</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Under Section 46(4) of CrPC, women cannot be arrested after sunset and before sunrise, except under exceptional judicial magistrate orders with a female officer present.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">🔒</span>
+          <h4 class="font-bold text-stone-900 text-sm">Right to Complete Privacy</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Victim statements can be recorded privately before a female police officer or magistrate. Identity disclosure is strictly prohibited under IPC Section 228A.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">💼</span>
+          <h4 class="font-bold text-stone-900 text-sm">PoSH Act (Workplace Protection)</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Every establishment with 10+ employees must maintain an Internal Complaints Committee (ICC) to investigate harassment complaints within 90 days.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">📧</span>
+          <h4 class="font-bold text-stone-900 text-sm">Virtual / Email Complaints</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            If unable to visit in person, women have the right to file written police complaints via registered email or speed post to the Commissioner or SP.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">🩺</span>
+          <h4 class="font-bold text-stone-900 text-sm">Free Medical Aid</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Under Section 357C of CrPC, all hospitals (government or private) are legally mandated to provide immediate free first aid and medical treatment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Physical Defense (Hidden initially) -->
+      <div id="content-defense" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2">
+          <span class="text-2xl">✋</span>
+          <h4 class="font-bold text-rose-950 text-sm">1. Palm-Heel Strike (Not a Fist)</h4>
+          <p class="text-xs text-rose-900 leading-relaxed">
+            Never punch with a closed fist (can break fingers). Drive the base of your open palm upward directly into the assailant's nose bridge or chin.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2">
+          <span class="text-2xl">🦵</span>
+          <h4 class="font-bold text-rose-950 text-sm">2. Groin Knee Drive</h4>
+          <p class="text-xs text-rose-900 leading-relaxed">
+            Grab attacker's shoulders or clothes with both hands to stabilize yourself, and drive your knee with full hip power upward into their groin. Run immediately.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-2">
+          <span class="text-2xl">🔄</span>
+          <h4 class="font-bold text-rose-950 text-sm">3. Wrist Grab Escape (The Lever)</h4>
+          <p class="text-xs text-rose-900 leading-relaxed">
+            Don't pull back directly. Rotate your wrist toward their thumb (the weakest point of their grip) and jerk your forearm sharply upward toward your opposite shoulder.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">👀</span>
+          <h4 class="font-bold text-stone-900 text-sm">4. Eye Gouge / Throat Notch</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            If pinned against a wall or ground, thrust stiff fingers into eyes or the soft hollow notch at the base of the throat. This triggers an involuntary reflex release.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">🔑</span>
+          <h4 class="font-bold text-stone-900 text-sm">5. Improvised Everyday Shields</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Keys protruding through knuckles, perfume/deodorant spray into eyes, heavy bag swing, or steel water bottle jab make lethal deterrents.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+          <span class="text-2xl">🗣️</span>
+          <h4 class="font-bold text-stone-900 text-sm">6. The "Fire!" Shouting Rule</h4>
+          <p class="text-xs text-stone-600 leading-relaxed">
+            Psychology shows shouting "Help" often causes bystanders to hesitate. Yelling "FIRE!" or "POLICE!" instantly compels people to turn around and investigate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Village & Grassroots Safety Outreach Section -->
+    <section class="bg-gradient-to-r from-amber-900 to-stone-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2">
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-400 text-amber-950">ग्राम सुरक्षा एवं जागरूकता (Rural & Community Outreach)</span>
+        <h3 class="text-2xl font-bold">Women Safety in Every Indian Village & Town</h3>
+        <p class="text-xs sm:text-sm text-stone-300 max-w-xl">
+          From Anganwadi workers to Mahila Panchayats, safety tools should be accessible without high-speed internet. All emergency numbers (112, 181, 1090) work on simple basic feature phones without balance or data.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+        <a href="tel:112" class="px-5 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl text-center text-xs transition shadow-lg">
+          Call 112 (Toll Free)
+        </a>
+        <button onclick="window.print()" class="px-5 py-3 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold rounded-2xl text-center text-xs border border-stone-700 transition">
+          🖨️ Print Offline Safety Card
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add Contact Modal -->
+  <div id="add-contact-modal" class="hidden fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl border border-stone-200">
+      <h4 class="font-bold text-stone-900 text-lg">Add Emergency Contact</h4>
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs font-semibold text-stone-600">Full Name</label>
+          <input type="text" id="contact-name" placeholder="e.g. Mom / Priya" class="w-full mt-1 px-3 py-2 border border-stone-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-stone-600">Relation</label>
+          <input type="text" id="contact-relation" placeholder="e.g. Mother / Sister / Friend" class="w-full mt-1 px-3 py-2 border border-stone-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-stone-600">Phone Number (with country code if needed)</label>
+          <input type="tel" id="contact-phone" placeholder="e.g. 9876543210" class="w-full mt-1 px-3 py-2 border border-stone-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500">
+        </div>
+      </div>
+      <div class="flex space-x-2 pt-2">
+        <button onclick="closeAddContactModal()" class="w-1/2 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-semibold">Cancel</button>
+        <button onclick="saveContact()" class="w-1/2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 bg-stone-900 text-stone-400 py-8 border-t border-stone-800 text-xs">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center font-bold text-white text-xs">
+          अभ
+        </div>
+        <p>© 2026 Abhaya Safety Initiative. Dedicated to the dignity, safety, and fearless freedom of every woman.</p>
+      </div>
+      <p class="text-stone-500">In emergencies, dial 112 directly. Works without internet on all cellular networks.</p>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Application Engine -->
+  <script>
+    // State management
+    let audioCtx = null;
+    let sirenOscillator = null;
+    let sirenGain = null;
+    let sirenInterval = null;
+    let isSirenPlaying = false;
+    let currentLang = 'en';
+    let sosTimer = null;
+    let sosCount = 5;
+    let guardianTimerId = null;
+    let guardianRemainingSeconds = 0;
+    let fakeCallTimeout = null;
+
+    // Contacts in localStorage
+    const defaultContacts = [
+      { id: 1, name: "Maa / Home", relation: "Mother", phone: "9876543210" },
+      { id: 2, name: "Sister / Friend", relation: "Emergency Backup", phone: "9123456789" }
+    ];
+
+    function getContacts() {
+      const stored = localStorage.getItem('abhaya_contacts');
+      if (!stored) {
+        localStorage.setItem('abhaya_contacts', JSON.stringify(defaultContacts));
+        return defaultContacts;
+      }
+      return JSON.parse(stored);
+    }
+
+    function renderContacts() {
+      const contacts = getContacts();
+      const listEl = document.getElementById('contacts-list');
+      if (!contacts || contacts.length === 0) {
+        listEl.innerHTML = `<p class="text-xs text-stone-400 italic py-2">No emergency contacts configured yet. Add your trusted family & friends.</p>`;
+        return;
+      }
+      listEl.innerHTML = contacts.map(c => `
+        <div class="p-3 bg-stone-50 hover:bg-stone-100/80 rounded-2xl border border-stone-200 flex items-center justify-between transition">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-xs">
+              ${c.name.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p class="text-xs font-bold text-stone-900">${c.name} <span class="text-[10px] font-normal text-stone-500">(${c.relation})</span></p>
+              <p class="text-[11px] font-mono text-stone-600">${c.phone}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <a href="tel:${c.phone}" class="p-2 rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition" title="Direct Call">
+              📞
+            </a>
+            <button onclick="deleteContact(${c.id})" class="p-2 rounded-lg bg-stone-200 text-stone-600 hover:bg-rose-100 hover:text-rose-700 transition" title="Delete">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddContactModal() {
+      document.getElementById('add-contact-modal').classList.remove('hidden');
+    }
+    function closeAddContactModal() {
+      document.getElementById('add-contact-modal').classList.add('hidden');
+    }
+
+    function saveContact() {
+      const name = document.getElementById('contact-name').value.trim();
+      const relation = document.getElementById('contact-relation').value.trim() || 'Trusted';
+      const phone = document.getElementById('contact-phone').value.trim();
+
+      if (!name || !phone) {
+        alert("Please enter both Name and Phone number.");
+        return;
+      }
+
+      const contacts = getContacts();
+      contacts.push({ id: Date.now(), name, relation, phone });
+      localStorage.setItem('abhaya_contacts', JSON.stringify(contacts));
+      renderContacts();
+      closeAddContactModal();
+
+      document.getElementById('contact-name').value = '';
+      document.getElementById('contact-relation').value = '';
+      document.getElementById('contact-phone').value = '';
+    }
+
+    function deleteContact(id) {
+      let contacts = getContacts();
+      contacts = contacts.filter(c => c.id !== id);
+      localStorage.setItem('abhaya_contacts', JSON.stringify(contacts));
+      renderContacts();
+    }
+
+    // Audio Synthesis for Siren and Whistle (Zero external dependencies)
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function toggleSiren() {
+      initAudio();
+      if (isSirenPlaying) {
+        stopSiren();
+      } else {
+        startSiren();
+      }
+    }
+
+    function startSiren() {
+      if (isSirenPlaying) return;
+      isSirenPlaying = true;
+      document.getElementById('hero-siren-btn').classList.add('bg-rose-600', 'text-white', 'animate-pulse');
+      document.getElementById('hero-siren-btn').classList.remove('bg-amber-500', 'text-stone-950');
+      document.getElementById('hero-siren-text').textContent = 'STOP SIREN (Playing)';
+      document.getElementById('tool-siren-btn').textContent = 'STOP SIREN';
+      document.getElementById('tool-siren-btn').classList.add('bg-stone-900');
+
+      sirenOscillator = audioCtx.createOscillator();
+      sirenGain = audioCtx.createGain();
+      sirenOscillator.type = 'sawtooth';
+      sirenGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+      let high = false;
+      sirenOscillator.frequency.setValueAtTime(700, audioCtx.currentTime);
+      sirenInterval = setInterval(() => {
+        if (!isSirenPlaying) return;
+        const targetFreq = high ? 700 : 1300;
+        sirenOscillator.frequency.exponentialRampToValueAtTime(targetFreq, audioCtx.currentTime + 0.35);
+        high = !high;
+      }, 400);
+
+      sirenOscillator.connect(sirenGain);
+      sirenGain.connect(audioCtx.destination);
+      sirenOscillator.start();
+    }
+
+    function stopSiren() {
+      if (!isSirenPlaying) return;
+      isSirenPlaying = false;
+      clearInterval(sirenInterval);
+      if (sirenOscillator) {
+        try { sirenOscillator.stop(); } catch(e){}
+      }
+      document.getElementById('hero-siren-btn').classList.remove('bg-rose-600', 'text-white', 'animate-pulse');
+      document.getElementById('hero-siren-btn').classList.add('bg-amber-500', 'text-stone-950');
+      document.getElementById('hero-siren-text').textContent = 'Loud Alarm / Siren';
+      document.getElementById('tool-siren-btn').textContent = 'Start Police Siren';
+      document.getElementById('tool-siren-btn').classList.remove('bg-stone-900');
+    }
+
+    function playWhistleBurst() {
+      initAudio();
+      for (let i = 0; i < 3; i++) {
+        const startTime = audioCtx.currentTime + (i * 0.4);
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(2600, startTime);
+        osc.frequency.exponentialRampToValueAtTime(3200, startTime + 0.25);
+        gain.gain.setValueAtTime(0.4, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, startTime + 0.28);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + 0.3);
+      }
+    }
+
+    // Geolocation and SOS Trigger
+    function fetchAndShareGPS() {
+      const statusEl = document.getElementById('gps-status-text');
+      statusEl.textContent = 'Fetching precise GPS coordinates...';
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude.toFixed(5);
+            const lng = pos.coords.longitude.toFixed(5);
+            statusEl.textContent = `📍 Lat: ${lat}, Lng: ${lng} (GPS Active)`;
+            const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
+            const message = encodeURIComponent(`EMERGENCY! I need immediate help. Here is my live location: ${mapLink}`);
+            window.open(`https://wa.me/?text=${message}`, '_blank');
+          },
+          (err) => {
+            statusEl.textContent = `GPS permission required or unavailable.`;
+            const fallbackMsg = encodeURIComponent(`EMERGENCY! I need help. Please contact me immediately!`);
+            window.open(`https://wa.me/?text=${fallbackMsg}`, '_blank');
+          },
+          { enableHighAccuracy: true, timeout: 8000 }
+        );
+      } else {
+        alert("Geolocation is not supported on this browser.");
+      }
+    }
+
+    function triggerSOSCountdown() {
+      sosCount = 5;
+      document.getElementById('countdown-number').textContent = sosCount;
+      document.getElementById('sos-countdown-modal').classList.remove('hidden');
+
+      sosTimer = setInterval(() => {
+        sosCount--;
+        document.getElementById('countdown-number').textContent = sosCount;
+        if (sosCount <= 0) {
+          clearInterval(sosTimer);
+          executeSOSImmediate();
+        }
+      }, 1000);
+    }
+
+    function cancelSOSCountdown() {
+      clearInterval(sosTimer);
+      document.getElementById('sos-countdown-modal').classList.add('hidden');
+    }
+
+    function executeSOSImmediate() {
+      clearInterval(sosTimer);
+      document.getElementById('sos-countdown-modal').classList.add('hidden');
+      startSiren();
+      broadcastEmergencyWhatsApp();
+    }
+
+    function broadcastEmergencyWhatsApp() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude.toFixed(5);
+            const lng = pos.coords.longitude.toFixed(5);
+            const mapLink = `https://maps.google.com/?q=${lat},${lng}`;
+            const text = encodeURIComponent(`🚨 EMERGENCY SOS! I am in danger and require immediate assistance. My live GPS location: ${mapLink}`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+          },
+          () => {
+            const text = encodeURIComponent(`🚨 EMERGENCY SOS! I am in danger and need help immediately! Please call me or send police.`);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+          }
+        );
+      } else {
+        const text = encodeURIComponent(`🚨 EMERGENCY SOS! I need help!`);
+        window.open(`https://wa.me/?text=${text}`, '_blank');
+      }
+    }
+
+    function broadcastEmergencySMS() {
+      const text = encodeURIComponent(`EMERGENCY! Need help right now. My location: Google Maps tracking.`);
+      window.open(`sms:?body=${text}`, '_blank');
+    }
+
+    // Fake Call Generator
+    function openFakeCallPrompt() {
+      scheduleFakeCall(0, 'Papa (Dad)');
+    }
+
+    function scheduleFakeCall(seconds, callerName) {
+      if (fakeCallTimeout) clearTimeout(fakeCallTimeout);
+      if (seconds === 0) {
+        showFakeCallScreen(callerName);
+      } else {
+        alert(`Fake incoming call from ${callerName} scheduled in ${seconds} seconds.`);
+        fakeCallTimeout = setTimeout(() => {
+          showFakeCallScreen(callerName);
+        }, seconds * 1000);
+      }
+    }
+
+    function showFakeCallScreen(callerName) {
+      document.getElementById('fake-caller-name').textContent = callerName;
+      document.getElementById('fake-call-status').textContent = 'Incoming Call...';
+      document.getElementById('call-active-script').classList.add('hidden');
+      document.getElementById('answer-call-btn').classList.remove('hidden');
+      document.getElementById('fake-call-modal').classList.remove('hidden');
+
+      // Synthesize phone ring
+      initAudio();
+      ringPhoneOscillator();
+    }
+
+    let ringOsc = null;
+    let ringInterval = null;
+    function ringPhoneOscillator() {
+      if (!audioCtx) return;
+      let count = 0;
+      ringInterval = setInterval(() => {
+        if (count > 6) {
+          clearInterval(ringInterval);
+          return;
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.2);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.2);
+        count++;
+      }, 2500);
+    }
+
+    function answerFakeCall() {
+      if (ringInterval) clearInterval(ringInterval);
+      document.getElementById('fake-call-status').textContent = '00:04 • Connected';
+      document.getElementById('answer-call-btn').classList.add('hidden');
+      document.getElementById('call-active-script').classList.remove('hidden');
+    }
+
+    function declineFakeCall() {
+      if (ringInterval) clearInterval(ringInterval);
+      document.getElementById('fake-call-modal').classList.add('hidden');
+    }
+
+    // Travel Check-In Timer
+    function startGuardianTimer(minutes) {
+      stopGuardianTimer();
+      guardianRemainingSeconds = minutes * 60;
+      updateGuardianDisplay();
+
+      guardianTimerId = setInterval(() => {
+        guardianRemainingSeconds--;
+        updateGuardianDisplay();
+        if (guardianRemainingSeconds <= 0) {
+          clearInterval(guardianTimerId);
+          alert("⚠️ Travel Safety Timer Expired! Are you safe? If not, trigger SOS.");
+          triggerSOSCountdown();
+        }
+      }, 1000);
+    }
+
+    function stopGuardianTimer() {
+      if (guardianTimerId) clearInterval(guardianTimerId);
+      document.getElementById('guardian-timer-display').textContent = 'Timer: Inactive (Safe)';
+    }
+
+    function updateGuardianDisplay() {
+      const mins = Math.floor(guardianRemainingSeconds / 60);
+      const secs = guardianRemainingSeconds % 60;
+      document.getElementById('guardian-timer-display').textContent = `Safety Timer: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    // Camouflage Mode (Calculator)
+    function enterCamouflage() {
+      document.getElementById('camouflage-container').classList.remove('hidden');
+    }
+
+    let exitClickCount = 0;
+    let exitClickTimer = null;
+    document.getElementById('exit-camouflage-btn').addEventListener('click', () => {
+      exitClickCount++;
+      if (exitClickCount === 1) {
+        exitClickTimer = setTimeout(() => { exitClickCount = 0; }, 500);
+      } else if (exitClickCount >= 2) {
+        clearTimeout(exitClickTimer);
+        exitClickCount = 0;
+        document.getElementById('camouflage-container').classList.add('hidden');
+      }
+    });
+
+    let calcExpression = '';
+    function calcInput(val) {
+      calcExpression += val;
+      document.getElementById('calc-display').textContent = calcExpression;
+    }
+    function calcClear() {
+      calcExpression = '';
+      document.getElementById('calc-display').textContent = '0';
+    }
+    function calcEval() {
+      try {
+        const sanitized = calcExpression.replace(/[^0-9+\-*/.]/g, '');
+        const res = Function(`'use strict'; return (${sanitized})`)();
+        calcExpression = String(res);
+        document.getElementById('calc-display').textContent = calcExpression;
+      } catch(e) {
+        document.getElementById('calc-display').textContent = 'Error';
+        calcExpression = '';
+      }
+    }
+
+    // Tabs
+    function switchTab(tab) {
+      const rightsBtn = document.getElementById('tab-rights-btn');
+      const defenseBtn = document.getElementById('tab-defense-btn');
+      const rightsContent = document.getElementById('content-rights');
+      const defenseContent = document.getElementById('content-defense');
+
+      if (tab === 'rights') {
+        rightsBtn.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold bg-white text-stone-900 shadow-sm transition";
+        defenseBtn.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-900 transition";
+        rightsContent.classList.remove('hidden');
+        defenseContent.classList.add('hidden');
+      } else {
+        defenseBtn.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold bg-white text-stone-900 shadow-sm transition";
+        rightsBtn.className = "flex-1 py-1.5 px-3 rounded-lg text-xs font-bold text-stone-600 hover:text-stone-900 transition";
+        defenseContent.classList.remove('hidden');
+        rightsContent.classList.add('hidden');
+      }
+    }
+
+    // Language Toggle (English / Hindi)
+    function toggleLanguage() {
+      const label = document.getElementById('lang-btn-label');
+      const heroSOS = document.getElementById('txt-instant-sos');
+      if (currentLang === 'en') {
+        currentLang = 'hi';
+        label.textContent = 'English';
+        heroSOS.textContent = '🚨 आपातकालीन SOS भेजें';
+      } else {
+        currentLang = 'en';
+        label.textContent = 'हिन्दी';
+        heroSOS.textContent = '🚨 ACTIVATE SOS ALERT';
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderContacts();
+    });
+  </script>
+</body>
+</html>
